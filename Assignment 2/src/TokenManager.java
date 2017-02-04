@@ -4,7 +4,6 @@ public class TokenManager extends Person
 {
 	/* Variables */
 	protected ArrayList<Child> children = new ArrayList<Child>();
-	protected ArrayList<Mode> modes = new ArrayList<Mode>();
 	
 	/*Constructors */
 	public TokenManager(String name) 
@@ -42,33 +41,49 @@ public class TokenManager extends Person
 		}
 	}
 	
-	public void addToken(String childName, String tokenName)
+	public void addToken(String childName, String modeName, String tokenName)
 	{
 		
 	}
 	
-	public void editToken(String childName, String tokenName, String newTokenName)
+	public void editToken(String childName, String modeName, String tokenName, String newTokenName)
 	{
 		
 	}
 	
-	public void deleteToken(String childName, String tokenName)
+	public void deleteToken(String childName, String modeName, String tokenName)
 	{
 		
 	}
 	
-	public void addReward(String childName, String rewardName, int rewardCost)
+	public void addReward(String childName, String modeName, String rewardName, int rewardCost)
 	{
 		
 	}
 	
-	public void
+	public void editReward(String childName, String modeName, String rewardName, String newName, int newRewardCost)
+	{
+		
+	}
 	
-	
-	
-	/* Setters */
+	public void deleteReward(String childName, String modeName, String rewardName)
+	{
+		
+	}
 	
 	/* Getters */
+	public Child getChild(String childName)
+	{
+		for (Child child : children)
+		{
+			if(child.getName().equals(childName))
+			{
+				return child;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Child> getchildren()
 	{
 		return children;

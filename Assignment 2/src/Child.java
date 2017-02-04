@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 public class Child extends Person 
 {
 	/* Variables */
+	protected ArrayList<Mode> modes = new ArrayList<Mode>();
 	protected TokenManager manager;
 	protected Mode currentMode;
 	
@@ -8,7 +11,19 @@ public class Child extends Person
 	public Child(String name, TokenManager manager) 
 	{
 		super(name);
-		this.manager = manager; 
+		this.manager = manager;
+		for (String type : DefaultModes.names())
+		{
+			modes.add(new Mode(type));
+		}
+		
+		for (Mode mode : modes)
+		{
+			if (mode.getName().equals("POSITIVE"))
+			{
+				currentMode = mode;
+			}
+		}
 	}
 	
 	/* Getters */
@@ -17,7 +32,12 @@ public class Child extends Person
 		return manager;
 	}
 	
-	public Mode getMode()
+	public ArrayList<Mode> getModeList()
+	{
+		return modes;
+	}
+	
+	public Mode getCurrentMode()
 	{
 		return currentMode;
 	}
