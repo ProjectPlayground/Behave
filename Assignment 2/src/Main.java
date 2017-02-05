@@ -11,12 +11,11 @@ public class Main
 		
 		while(true)
 		{
-			System.out.println("What kind of user are you?");
+			System.out.println("What kind of user are you? or 'quit'");
 			String userType = scan.nextLine().toLowerCase();
 			
 			if (userType.equals("parent"))
 			{
-				System.out.println("You are a Parent.");
 				System.out.println("Please input your name: \n");
 				String userName = scan.nextLine();
 				for (Person user : users)
@@ -156,7 +155,7 @@ public class Main
 					{
 						for (Child child : ((Parent) currentUser).getchildren())
 						{
-							System.out.println("Current Child: " + child.getName());
+							System.out.println("\nCurrent Child: " + child.getName());
 							for (Mode mode : child.getModeList())
 							{
 								System.out.println(mode.getName());
@@ -193,7 +192,7 @@ public class Main
 					{
 						for (Child child: ((Parent) user).getchildren())
 						{
-							if(child.getName().equals(userName))
+							if(child.getName().toLowerCase().equals(userName.toLowerCase()))
 							{
 								while(true)
 								{
@@ -270,6 +269,10 @@ public class Main
 						}
 					}
 				}
+			}
+			else if (userType.toLowerCase().equals("quit"))
+			{
+				break;
 			}
 			else
 			{

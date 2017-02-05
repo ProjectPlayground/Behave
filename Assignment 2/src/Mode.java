@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Mode 
 {
@@ -33,9 +34,17 @@ public class Mode
 		}
 	}
 	
-	public void deleteToken(String name)
+	public void deleteToken(String tokenName)
 	{
-		
+		Iterator<Token> it = tokens.iterator();
+		while (it.hasNext())
+		{
+			Token token = it.next();
+			if (token.getName().equals(tokenName))
+			{
+				it.remove();
+			}
+		}
 	}
 	
 	public void addReward(String rewardName, int rewardCost) 
@@ -57,7 +66,15 @@ public class Mode
 	
 	public void deleteReward(String rewardName) 
 	{
-
+		Iterator<Reward> it = rewards.iterator();
+		while (it.hasNext())
+		{
+			Reward reward = it.next();
+			if (reward.getName().equals(rewardName))
+			{
+				it.remove();
+			}
+		}
 	}
 	
 	/* Setters */

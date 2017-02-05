@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TokenManager extends Person 
 {
@@ -31,7 +32,15 @@ public class TokenManager extends Person
 	
 	public void deleteChild(String childName)
 	{
-		
+		Iterator<Child> it = children.iterator();
+		while (it.hasNext())
+		{
+			Child child = it.next();
+			if (child.getName().equals(childName))
+			{
+				it.remove();
+			}
+		}
 	}
 	
 	public void addToken(String childName, String tokenName)
