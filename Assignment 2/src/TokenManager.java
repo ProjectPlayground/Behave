@@ -31,44 +31,70 @@ public class TokenManager extends Person
 	
 	public void deleteChild(String childName)
 	{
-		for (Child child : children)
+		
+	}
+	
+	public void addToken(String childName, String tokenName)
+	{
+		if (getChild(childName) == null)
 		{
-			if (child.getName().equals(childName))
-			{
-				children.remove(child);
-				break;
-			}
+			return;
 		}
+		getChild(childName).getCurrentMode().addToken(tokenName);
 	}
 	
-	public void addToken(String childName, String modeName, String tokenName)
+	public void editToken(String childName, String tokenName, String newTokenName)
 	{
-		
+		if (getChild(childName) == null)
+		{
+			return;
+		}
+		getChild(childName).getCurrentMode().editToken(tokenName, newTokenName);
 	}
 	
-	public void editToken(String childName, String modeName, String tokenName, String newTokenName)
+	public void deleteToken(String childName, String tokenName)
 	{
-		
+		if (getChild(childName) == null)
+		{
+			return;
+		}
+		getChild(childName).getCurrentMode().deleteToken(tokenName);
 	}
 	
-	public void deleteToken(String childName, String modeName, String tokenName)
+	public void addTokenAccu(String childName, int amount)
 	{
-		
+		if (getChild(childName) == null)
+		{
+			return;
+		}
+		getChild(childName).getCurrentMode().setTokenAccu(amount);
 	}
 	
-	public void addReward(String childName, String modeName, String rewardName, int rewardCost)
+	public void addReward(String childName, String rewardName, int rewardCost)
 	{
-		
+		if (getChild(childName) == null)
+		{
+			return;
+		}
+		getChild(childName).getCurrentMode().addReward(rewardName, rewardCost);
 	}
 	
-	public void editReward(String childName, String modeName, String rewardName, String newName, int newRewardCost)
+	public void editReward(String childName, String rewardName, String newName, int newRewardCost)
 	{
-		
+		if (getChild(childName) == null)
+		{
+			return;
+		}
+		getChild(childName).getCurrentMode().editReward(rewardName, newName, newRewardCost);
 	}
 	
-	public void deleteReward(String childName, String modeName, String rewardName)
+	public void deleteReward(String childName, String rewardName)
 	{
-		
+		if (getChild(childName) == null)
+		{
+			return;
+		}
+		getChild(childName).getCurrentMode().deleteReward(rewardName);
 	}
 	
 	/* Getters */
