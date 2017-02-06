@@ -26,12 +26,20 @@ public class Child extends Person
 		}
 	}
 	
-	/* Getters */
-	public TokenManager getManager()
+	/* Methods */
+	public void tokenStatus()
 	{
-		return manager;
+		for(Mode mode : modes)
+		{
+			System.out.println("\nCurrent " + mode.getName() + " Tokens: " + mode.getTokens().size());
+			for(Token token :mode.getTokens())
+			{
+				System.out.println(token.getName() + " " + token.getTimeStamp());
+			}
+		}
 	}
 	
+	/* Getters */
 	public ArrayList<Mode> getModeList()
 	{
 		return modes;
@@ -52,4 +60,5 @@ public class Child extends Person
 	{
 		this.currentMode = mode;
 	}
+
 }

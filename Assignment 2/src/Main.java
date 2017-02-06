@@ -37,7 +37,7 @@ public class Main
 					System.out.println("(a) Add Child		(b) Edit Child		(c) Remove Child		(d) Set Child Mode");
 					System.out.println("(e) Add Token		(f) Edit Token		(g) Remove Token		(h) Edit Periodic Tokens");
 					System.out.println("(i) Add Reward		(j) Edit Reward		(k) Remove Reward		(l) Children Status");
-					System.out.println("(m) Change User");
+					System.out.println("(m) Redeem Reward	(n) Change User");
 					
 					String command = scan.nextLine();
 					
@@ -153,20 +153,31 @@ public class Main
 					}
 					else if (command.equals("l"))
 					{
-						for (Child child : ((Parent) currentUser).getchildren())
-						{
-							System.out.println("\nCurrent Child: " + child.getName());
-							for (Mode mode : child.getModeList())
-							{
-								System.out.println(mode.getName());
-								System.out.println("____________________");
-								System.out.println("	Tokens  | " + mode.getTokens().size());
-								System.out.println("	Rewards | " + mode.getRewards().size()+ "\n");
-							}
-						}
-						
+						((Parent) currentUser).childrenStatus();
 					}
 					else if (command.equals("m"))
+					{
+						System.out.println("Please enter a child name to redeem a reward from:");
+						String childName = scan.nextLine();
+						Child child = ((Parent) currentUser).getChild(childName);
+						System.out.println(child.getName() + " is currently in " + child.getCurrentMode().getName() + " mode.");
+						System.out.println("Please enter a reward name to redeem:");
+						for(Reward reward : child.getCurrentMode().getRewards())
+						{
+							System.out.println("Costs: " + reward.getCost() + " -- Name: " + reward.getName());
+						}
+						String rewardName = scan.nextLine();
+						int cost = child.getCurrentMode().redeemReward(rewardName, child.getCurrentMode().getTokens().size());
+						
+						for (int i = 0; i < cost; i++)
+						{
+							child.tokenStatus();
+							System.out.println("\nEnter the name of a token to expend: ");
+							String checker = scan.nextLine();
+							child.getCurrentMode().deleteToken(checker);
+						}
+					}
+					else if (command.equals("n"))
 					{
 						users.add(currentUser);
 						break;
@@ -202,15 +213,9 @@ public class Main
 									
 									if (command.equals("a"))
 									{
-										for(Mode mode : child.getModeList())
-										{
-											System.out.println("\nCurrent " + mode.getName() + " Tokens: " + mode.getTokens().size());
-											for(Token token :mode.getTokens())
-											{
-												System.out.println(token.getName() + " " + token.getTimeStamp());
-											}
-										}
+										child.tokenStatus();
 									}
+									
 									else if (command.equals("b"))
 									{
 										for(Mode mode: child.getModeList())
@@ -223,25 +228,22 @@ public class Main
 												{
 													for(Reward reward : mode.getRewards())
 													{
-														System.out.println(counter + ".  Costs: " + reward.getCost() + " -- " + reward.getName());
+														System.out.println(counter + ".  Costs: " + reward.getCost() + " -- Name: " + reward.getName());
 														counter++;
 													}
-													System.out.println("Enter the number of the reward to be redeemed: ");
-													int choice = scan.nextInt();
-													if (choice >= mode.getRewards().size())
-													{
-														System.out.println("Invalid Input");
-														break;
-													}
+													System.out.println("Enter the name of the reward to be redeemed: ");
 													
-													System.out.println("You redeemed " + mode.getRewards().get(choice) + " for a cost of " + mode.getRewards().get(choice).getCost());
-													
-													int cost = mode.getRewards().get(choice).getCost();
+													String choice = scan.nextLine();									
+													int cost = mode.redeemReward(choice, mode.getTokens().size());
 													
 													for (int i = 0; i < cost; i++)
 													{
-														mode.getTokens().remove(i);
+														child.tokenStatus();
+														System.out.println("\nEnter the name of a token to expend: ");
+														String checker = scan.nextLine();
+														mode.deleteToken(checker);
 													}
+													
 													System.out.println("You now have " + mode.getTokens().size() + " tokens left.");
 													break;
 												}

@@ -20,6 +20,12 @@ public class TokenManager extends Person
 	
 	public void editChild(String childName, String newName)
 	{
+		if (getChild(childName) == null)
+		{
+			System.out.println("There is no child with that name!\n");
+			return;
+		}
+		
 		for (Child child : children)
 		{
 			if (child.getName().equals(childName))
@@ -32,6 +38,12 @@ public class TokenManager extends Person
 	
 	public void deleteChild(String childName)
 	{
+		if (getChild(childName) == null)
+		{
+			System.out.println("There is no child with that name!\n");
+			return;
+		}
+		
 		Iterator<Child> it = children.iterator();
 		while (it.hasNext())
 		{
@@ -47,6 +59,7 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().addToken(tokenName);
@@ -56,6 +69,7 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().editToken(tokenName, newTokenName);
@@ -65,6 +79,7 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().deleteToken(tokenName);
@@ -74,6 +89,7 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().setTokenAccu(amount);
@@ -83,6 +99,7 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().addReward(rewardName, rewardCost);
@@ -92,6 +109,7 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().editReward(rewardName, newName, newRewardCost);
@@ -101,9 +119,25 @@ public class TokenManager extends Person
 	{
 		if (getChild(childName) == null)
 		{
+			System.out.println("There is no child with that name!\n");
 			return;
 		}
 		getChild(childName).getCurrentMode().deleteReward(rewardName);
+	}
+	
+	public void childrenStatus()
+	{
+		for (Child child : children)
+		{
+			System.out.println("\nCurrent Child: " + child.getName());
+			for (Mode mode : child.getModeList())
+			{
+				System.out.println(mode.getName());
+				System.out.println("____________________");
+				System.out.println("	Tokens  | " + mode.getTokens().size());
+				System.out.println("	Rewards | " + mode.getRewards().size()+ "\n");
+			}
+		}
 	}
 	
 	/* Getters */

@@ -77,6 +77,27 @@ public class Mode
 		}
 	}
 	
+	public int redeemReward(String rewardName, int amount)
+	{
+		int cost = 0;
+		Iterator<Reward> it = rewards.iterator();
+		while (it.hasNext())
+		{
+			Reward reward = it.next();
+			if (reward.getName().equals(rewardName))
+			{
+				cost = reward.getCost();
+				if (amount < cost)
+				{
+					System.out.println("You dont have enough tokens for this!");
+					break;
+				}
+				it.remove();
+			}
+		}
+		return cost;
+	}
+	
 	/* Setters */
 	public void setName(String name)
 	{
