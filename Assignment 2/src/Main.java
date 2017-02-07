@@ -7,6 +7,7 @@ public class Main
 	{
 		ArrayList<Person> users = new ArrayList<Person>();
 		Person currentUser = null;
+		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		
 		while(true)
