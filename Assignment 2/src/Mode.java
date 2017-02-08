@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
 
 public class Mode 
 {
@@ -8,7 +9,9 @@ public class Mode
 	protected ArrayList<Token> tokens = new ArrayList<Token>();
 	protected ArrayList<Reward> rewards = new ArrayList<Reward>();
 	protected int tokenAccumulator = 0;
-	
+	protected int tokenTimer = 1;
+	protected int hash = 0;
+	Timer timer = new Timer();
 	/* Constructor */
 	public Mode(String name)
 	{
@@ -104,15 +107,37 @@ public class Mode
 		modeName = name;
 	}
 	
-	public void setTokenAccu(int amount)
+	public void setTokenAccu(int amount, int interval)
 	{
 		this.tokenAccumulator = amount;
+		this.tokenTimer = interval;
+		timer.cancel();
+		this.timer = new Timer();
+		
+		timer.schedule(
+			    new java.util.TimerTask() 
+			    {
+			        @Override
+			        public void run() 
+			        {
+			        	for(int i = 0; i < amount; i++)
+			        	{
+			        		addToken("AutoToken " + hash);
+			        		hash++;
+			        	}
+			        }
+			    }, 1, tokenTimer*1000);
 	}
 	
 	/* Getters */
 	public String getName()
 	{
 		return modeName;
+	}
+	
+	public int getTimer()
+	{
+		return tokenTimer;
 	}
 	
 	public int getTokenAccu()

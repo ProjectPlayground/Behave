@@ -85,14 +85,14 @@ public class TokenManager extends Person
 		getChild(childName).getCurrentMode().deleteToken(tokenName);
 	}
 	
-	public void addTokenAccu(String childName, int amount)
+	public void addTokenAccu(String childName, int amount, int interval)
 	{
 		if (getChild(childName) == null)
 		{
 			System.out.println("There is no child with that name!\n");
 			return;
 		}
-		getChild(childName).getCurrentMode().setTokenAccu(amount);
+		getChild(childName).getCurrentMode().setTokenAccu(amount, interval);
 	}
 	
 	public void addReward(String childName, String rewardName, int rewardCost)

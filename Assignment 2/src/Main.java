@@ -67,6 +67,11 @@ public class Main
 						System.out.println("Please enter a child name to change their mode:");
 						String childName = scan.nextLine();
 						Child currentChild = ((Parent) currentUser).getChild(childName);
+						if (currentChild == null)
+						{
+							System.out.println("No such person");
+							break;
+						}
 						System.out.println("This Childs current mode is: " + currentChild.getCurrentMode().getName());
 						
 						System.out.println("The Child has these modes:");
@@ -120,7 +125,9 @@ public class Main
 						String childName = scan.nextLine();
 						System.out.println("Please enter an interger amount of tokens to add:");
 						int amount = scan.nextInt();
-						((Parent) currentUser).addTokenAccu(childName, amount);
+						System.out.println("Please enter an interger amount of seconds for the interval:");
+						int time = scan.nextInt();
+						((Parent) currentUser).addTokenAccu(childName, amount, time);
 					}
 					else if (command.equals("i"))
 					{
@@ -161,6 +168,11 @@ public class Main
 						System.out.println("Please enter a child name to redeem a reward from:");
 						String childName = scan.nextLine();
 						Child child = ((Parent) currentUser).getChild(childName);
+						if (child == null)
+						{
+							System.out.println("No such person");
+							break;
+						}
 						System.out.println(child.getName() + " is currently in " + child.getCurrentMode().getName() + " mode.");
 						System.out.println("Please enter a reward name to redeem:");
 						for(Reward reward : child.getCurrentMode().getRewards())
