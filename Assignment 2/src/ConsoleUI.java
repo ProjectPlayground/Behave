@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class ConsoleUI 
 {
-	
+	ArrayList<State> states;
 	ArrayList<Person> users;
 	Person currentUser;
 	Scanner scan;
@@ -13,10 +13,11 @@ public class ConsoleUI
 		users = new ArrayList<Person>();
 		currentUser = null;
 		scan = new Scanner(System.in);
+		states = new ArrayList<State>();
 	}
 	
 	public void run()
-	{
+	{		
 		while(true)
 		{
 			System.out.println("What kind of user are you? or 'quit'");
@@ -37,6 +38,7 @@ public class ConsoleUI
 				if (currentUser == null)
 				{
 					currentUser = new Parent(userName);
+					users.add(currentUser);
 				}
 				
 				while(true)
@@ -45,35 +47,32 @@ public class ConsoleUI
 					System.out.println("(a) Add Child		(b) Edit Child		(c) Remove Child		(d) Set Child Mode");
 					System.out.println("(e) Add Token		(f) Edit Token		(g) Remove Token		(h) Edit Periodic Tokens");
 					System.out.println("(i) Add Reward		(j) Edit Reward		(k) Remove Reward		(l) Children Status");
-					System.out.println("(m) Redeem Reward	(n) Change User");
+					System.out.println("(m) Redeem Reward	(n) Change User		(o) Revert to old save		(p) Print User List");
+					System.out.println("(q) Save");
 					
 					String command = scan.nextLine();
 					
 					if (command.equals("a"))
 					{
-						System.out.println("Please enter a child name to add:");
-						String childName = scan.nextLine();
+						String 	childName 	= promptForInput("Please enter a child name to add:");
 						((Parent) currentUser).addChild(childName);
 					}
 					else if (command.equals("b"))
 					{
-						System.out.println("Please enter a child name to edit:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter the childs new name:");
-						String newName = scan.nextLine();
+						String 	childName 	= promptForInput("Please enter a child name to edit:");
+						String 	newName 	= promptForInput("Please enter the childs new name:");
 						((Parent) currentUser).editChild(childName, newName);
 					}
 					else if (command.equals("c"))
 					{
-						System.out.println("Please enter a child name:");
-						String childName = scan.nextLine();
+						String 	childName 	= promptForInput("Please enter a child name:");
 						((Parent) currentUser).deleteChild(childName);
 					}
 					else if (command.equals("d"))
 					{
-						System.out.println("Please enter a child name to change their mode:");
-						String childName = scan.nextLine();
-						Child currentChild = ((Parent) currentUser).getChild(childName);
+						String 	childName 	= promptForInput("Please enter a child name to change their mode:");
+						Child 	currentChild= ((Parent) currentUser).getChild(childName);
+						
 						if (currentChild == null)
 						{
 							System.out.println("No such person");
@@ -87,8 +86,7 @@ public class ConsoleUI
 							System.out.println(mode.getName());
 						}
 						
-						System.out.println("Enter the name of the mode to change the child too: ");
-						String newModeString = scan.nextLine();
+						String newModeString = promptForInput("Enter the name of the mode to change the child to: ");
 						
 						for (Mode mode : currentChild.getModeList())
 						{
@@ -101,69 +99,50 @@ public class ConsoleUI
 					}
 					else if (command.equals("e"))
 					{
-						System.out.println("Please enter a child name to add token to:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter a token name:");
-						String tokenName = scan.nextLine();
+						String 	childName 	= promptForInput("Please enter a child name to add token to:");
+						String 	tokenName 	= promptForInput("Please enter a token name:");
 						((Parent) currentUser).addToken(childName, tokenName);;
 					}
 					else if (command.equals("f"))
 					{
-						System.out.println("Please enter a child name to edit token from:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter a token name:");
-						String tokenName = scan.nextLine();
-						System.out.println("Please enter a new token name:");
-						String newTokenName = scan.nextLine();
-						
+						String 	childName 	= promptForInput("Please enter a child name to edit token from: ");
+						String 	tokenName 	= promptForInput("Please enter a token name: ");
+						String 	newTokenName= promptForInput("Please enter a new token name:");
 						((Parent) currentUser).editToken(childName, tokenName, newTokenName);
 					}
 					else if (command.equals("g"))
 					{
-						System.out.println("Please enter a child name to delete token from:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter a token name:");
-						String tokenName = scan.nextLine();
+						String 	childName 	= promptForInput("Please enter a child name to delete token from:");
+						String 	tokenName 	= promptForInput("Please enter a token name:");
 						((Parent) currentUser).deleteToken(childName, tokenName);
 					}
 					else if (command.equals("h"))
 					{
-						System.out.println("Please enter a child name to add tokens to periodically:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter an interger amount of tokens to add:");
-						int amount = scan.nextInt();
-						System.out.println("Please enter an interger amount of seconds for the interval:");
-						int time = scan.nextInt();
+						String 	childName 	= promptForInput("Please enter a child name to add tokens to periodically:");
+						int 	amount 		= promptForInputInt("Please enter an interger amount of tokens to add:");
+						int 	time 		= promptForInputInt("Please enter an interger amount of seconds for the interval:");
 						((Parent) currentUser).addTokenAccu(childName, amount, time);
 					}
 					else if (command.equals("i"))
 					{
-						System.out.println("Please enter a child name to add reward to:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter a reward name:");
-						String rewardName = scan.nextLine();
-						System.out.println("Please enter a reward cost:");
-						int rewardCost = scan.nextInt();
+						System.out.println();
+						String 	childName 	= promptForInput("Please enter a child name to add reward to:");
+						String 	rewardName 	= promptForInput("Please enter a reward name:");
+						int 	rewardCost 	= promptForInputInt("Please enter a reward cost:");
 						((Parent) currentUser).addReward(childName, rewardName, rewardCost);
 					}
 					else if (command.equals("j"))
 					{
-						System.out.println("Please enter a child name to add reward to:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter a reward name:");
-						String rewardName = scan.nextLine();
-						System.out.println("Please enter a new reward name:");
-						String newRewardName = scan.nextLine();
-						System.out.println("Please enter a new reward cost:");
-						int newRewardCost = scan.nextInt();
-						((Parent) currentUser).editReward(childName, rewardName, newRewardName, newRewardCost);
+						String 	childName 	= promptForInput("Please enter a child name to add reward to:");
+						String 	rewardName 	= promptForInput("Please enter a reward name:");
+						String 	newName 	= promptForInput("Please enter a new reward name:");
+						int newRewardCost 	= promptForInputInt("Please enter a new reward cost:");
+						((Parent) currentUser).editReward(childName, rewardName, newName, newRewardCost);
 					}
 					else if (command.equals("k"))
 					{
-						System.out.println("Please enter a child name to delete reward from:");
-						String childName = scan.nextLine();
-						System.out.println("Please enter a reward name:");
-						String rewardName = scan.nextLine();
+						String 	childName	= promptForInput("Please enter a child name to delete reward from:");
+						String 	rewardName 	= promptForInput("Please enter a reward name:");
 						((Parent) currentUser).deleteReward(childName, rewardName);
 					}
 					else if (command.equals("l"))
@@ -172,9 +151,8 @@ public class ConsoleUI
 					}
 					else if (command.equals("m"))
 					{
-						System.out.println("Please enter a child name to redeem a reward from:");
-						String childName = scan.nextLine();
-						Child child = ((Parent) currentUser).getChild(childName);
+						String 	childName 	= promptForInput("Please enter a child name to redeem a reward from:");
+						Child 	child 		= ((Parent) currentUser).getChild(childName);
 						if (child == null)
 						{
 							System.out.println("No such person");
@@ -199,9 +177,34 @@ public class ConsoleUI
 					}
 					else if (command.equals("n"))
 					{
-						users.add(currentUser);
+						currentUser= null;
 						break;
 					}
+					else if (command.equals("o"))
+					{
+						int counter = 0;
+						for (State state : states)
+						{
+							System.out.println(counter + ". " + state.getTimeStamp());
+							counter++;
+						}
+						String choice = promptForInput("Which save would you like to backup too?");
+						currentUser = null;
+						users = states.get(Integer.parseInt(choice)).getSavedState();
+						break;
+					}
+					else if (command.equals("p"))
+					{
+						for (int i = 0; i < users.size(); i++)
+						{
+							System.out.println(i + ". " + users.get(i).getName());
+						}
+					}
+					else if (command.equals("q"))
+					{
+						states.add(new State(users));
+					}
+					
 					else
 					{
 						System.out.println("Incorrect Entry");
@@ -211,8 +214,8 @@ public class ConsoleUI
 			
 			else if (userType.equals("child"))
 			{
-				System.out.println("Please input your name: ");
-				String userName = scan.nextLine();
+				String userName = promptForInput("Please input your name: ");
+				
 				if(users.size() == 0)
 				{
 					System.out.println("There are no Children entered!");
@@ -251,6 +254,7 @@ public class ConsoleUI
 														System.out.println(counter + ".  Costs: " + reward.getCost() + " -- Name: " + reward.getName());
 														counter++;
 													}
+													
 													System.out.println("Enter the name of the reward to be redeemed: ");
 													
 													String choice = scan.nextLine();									
@@ -301,5 +305,19 @@ public class ConsoleUI
 				System.out.println("That is not a currently Supported user!");
 			}
 		}
+	}
+	
+	public String promptForInput(String prompt)
+	{
+		System.out.println(prompt);
+		String message = scan.nextLine();
+		return message;
+	}
+	
+	public int promptForInputInt(String prompt)
+	{
+		System.out.println(prompt);
+		int message = scan.nextInt();
+		return message;
 	}
 }

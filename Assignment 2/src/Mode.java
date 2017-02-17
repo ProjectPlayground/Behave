@@ -6,12 +6,15 @@ public class Mode
 {
 	/* Variables */
 	protected String modeName;
+	
 	protected ArrayList<Token> tokens = new ArrayList<Token>();
 	protected ArrayList<Reward> rewards = new ArrayList<Reward>();
+	
 	protected int tokenAccumulator = 0;
 	protected int tokenTimer = 1;
 	protected int hash = 0;
 	Timer timer = new Timer();
+	
 	/* Constructor */
 	public Mode(String name)
 	{

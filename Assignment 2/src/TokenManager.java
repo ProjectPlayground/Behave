@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class TokenManager extends Person 
+public abstract class TokenManager extends Person 
 {
 	/* Variables */
 	protected ArrayList<Child> children = new ArrayList<Child>();
@@ -13,117 +12,25 @@ public class TokenManager extends Person
 	}
 	
 	/* Methods */
-	public void addChild(String childName)
-	{
-		children.add(new Child(childName, this));
-	}
+	abstract void addChild(String childName);
 	
-	public void editChild(String childName, String newName)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		
-		for (Child child : children)
-		{
-			if (child.getName().equals(childName))
-			{
-				child.setName(newName);
-				break;
-			}
-		}
-	}
+	abstract void editChild(String childName, String newName);
 	
-	public void deleteChild(String childName)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		
-		Iterator<Child> it = children.iterator();
-		while (it.hasNext())
-		{
-			Child child = it.next();
-			if (child.getName().equals(childName))
-			{
-				it.remove();
-			}
-		}
-	}
+	abstract void deleteChild(String childName);
 	
-	public void addToken(String childName, String tokenName)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().addToken(tokenName);
-	}
+	abstract void addToken(String childName, String tokenName);
 	
-	public void editToken(String childName, String tokenName, String newTokenName)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().editToken(tokenName, newTokenName);
-	}
+	abstract void editToken(String childName, String tokenName, String newTokenName);
 	
-	public void deleteToken(String childName, String tokenName)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().deleteToken(tokenName);
-	}
+	abstract void deleteToken(String childName, String tokenName);
 	
-	public void addTokenAccu(String childName, int amount, int interval)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().setTokenAccu(amount, interval);
-	}
+	abstract void addTokenAccu(String childName, int amount, int interval);
 	
-	public void addReward(String childName, String rewardName, int rewardCost)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().addReward(rewardName, rewardCost);
-	}
+	abstract void addReward(String childName, String rewardName, int rewardCost);
 	
-	public void editReward(String childName, String rewardName, String newName, int newRewardCost)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().editReward(rewardName, newName, newRewardCost);
-	}
+	abstract void editReward(String childName, String rewardName, String newName, int newRewardCost);
 	
-	public void deleteReward(String childName, String rewardName)
-	{
-		if (getChild(childName) == null)
-		{
-			System.out.println("There is no child with that name!\n");
-			return;
-		}
-		getChild(childName).getCurrentMode().deleteReward(rewardName);
-	}
+	abstract void deleteReward(String childName, String rewardName);
 	
 	public void childrenStatus()
 	{
