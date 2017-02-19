@@ -2,6 +2,10 @@ import java.util.ArrayList;
 
 public abstract class TokenManager extends Person 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 24086341589368821L;
 	/* Variables */
 	protected ArrayList<Child> children = new ArrayList<Child>();
 	

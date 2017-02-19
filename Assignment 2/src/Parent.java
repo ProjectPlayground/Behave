@@ -4,6 +4,11 @@ public class Parent extends TokenManager
 {
 	/* Variables */
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8943726113930609846L;
+
 	/*Constructors */
 	public Parent(String name) 
 	{

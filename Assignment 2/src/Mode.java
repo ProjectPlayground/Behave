@@ -1,9 +1,15 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 
-public class Mode 
+public class Mode implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4435930128354401336L;
+
 	/* Variables */
 	protected String modeName;
 	
@@ -13,7 +19,7 @@ public class Mode
 	protected int tokenAccumulator = 0;
 	protected int tokenTimer = 1;
 	protected int hash = 0;
-	Timer timer = new Timer();
+	transient Timer timer = new Timer();
 	
 	/* Constructor */
 	public Mode(String name)
@@ -156,6 +162,21 @@ public class Mode
 	public ArrayList<Reward> getRewards()
 	{
 		return rewards;
+	}
+	
+	public int getTokensUpToDate(long time)
+	{
+		int count = 0;
+		
+		for (Token token : tokens)
+		{
+			if (token.getTimeStamp() < time)
+			{
+				count++;
+			}
+		}
+		
+		return count;
 	}
 
 }

@@ -1,5 +1,8 @@
-public class Reward 
+import java.io.Serializable;
+
+public class Reward implements Serializable
 {
+	private static final long serialVersionUID = 107920696175806625L;
 	/* Variables */
 	protected String name;
 	protected int tokenCost = 1;

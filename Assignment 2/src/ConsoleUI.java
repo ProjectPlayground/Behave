@@ -7,6 +7,7 @@ public class ConsoleUI
 	ArrayList<Person> users;
 	Person currentUser;
 	Scanner scan;
+	FileHandler fh;
 	
 	public ConsoleUI() 
 	{
@@ -14,13 +15,14 @@ public class ConsoleUI
 		currentUser = null;
 		scan = new Scanner(System.in);
 		states = new ArrayList<State>();
+		fh = new FileHandler();
 	}
 	
 	public void run()
 	{		
 		while(true)
 		{
-			System.out.println("What kind of user are you? or 'quit'");
+			System.out.println("What kind of user are you (parent or child)? or 'quit'");
 			String userType = scan.nextLine().toLowerCase();
 			
 			if (userType.equals("parent"))
@@ -182,15 +184,20 @@ public class ConsoleUI
 					}
 					else if (command.equals("o"))
 					{
-						int counter = 0;
-						for (State state : states)
-						{
-							System.out.println(counter + ". " + state.getTimeStamp());
-							counter++;
-						}
-						String choice = promptForInput("Which save would you like to backup too?");
-						currentUser = null;
-						users = states.get(Integer.parseInt(choice)).getSavedState();
+//						int counter = 0;
+//						for (State state : states)
+//						{
+//							System.out.println(counter + ". " + state.getTimeStamp());
+//							counter++;
+//						}
+//						String choice = promptForInput("Which save would you like to backup too?");
+//						currentUser = null;
+//						users = states.get(Integer.parseInt(choice)).getSavedState();
+//						break;
+						users.clear();
+						String 	fileName	= promptForInput("Please enter a file name to read from:");
+						users = fh.readFromFile(fileName);
+						currentUser= null;
 						break;
 					}
 					else if (command.equals("p"))
@@ -202,7 +209,9 @@ public class ConsoleUI
 					}
 					else if (command.equals("q"))
 					{
-						states.add(new State(users));
+						//states.add(new State(users));
+						String 	fileName	= promptForInput("Please enter a file name to save to:");
+						fh.saveToFile(fileName, users);
 					}
 					
 					else

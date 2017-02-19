@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Child extends Person 
 {
+
+	private static final long serialVersionUID = 1117307613625852055L;
 	/* Variables */
 	protected ArrayList<Mode> modes = new ArrayList<Mode>();
 	protected TokenManager manager;
