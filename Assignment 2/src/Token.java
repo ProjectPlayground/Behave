@@ -9,6 +9,7 @@ public class Token implements Serializable
 	/* Variables */
 	protected String name;
 	protected long timeStamp;
+	protected boolean redeemed = false;
 	
 	/* Constructor */
 	
@@ -25,6 +26,18 @@ public class Token implements Serializable
 		name = newName;
 	}
 	
+	public void swapRedeem()
+	{
+		if (redeemed == false)
+		{
+			redeemed = true;
+		}
+		else
+		{
+			redeemed = false;
+		}
+	}
+	
 	/* Getters */
 	
 	public String getName()
@@ -35,5 +48,10 @@ public class Token implements Serializable
 	public long getTimeStamp()
 	{
 		return timeStamp;
+	}
+	
+	public boolean getRedeemed()
+	{
+		return redeemed;
 	}
 }

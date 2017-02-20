@@ -42,4 +42,5 @@ public class Reward implements Serializable
 	{
 		return tokenCost;
 	}
+
 }

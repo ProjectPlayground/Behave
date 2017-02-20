@@ -104,7 +104,6 @@ public class Mode implements Serializable
 					System.out.println("You dont have enough tokens for this!");
 					break;
 				}
-				it.remove();
 			}
 		}
 		return cost;
@@ -178,5 +177,32 @@ public class Mode implements Serializable
 		
 		return count;
 	}
+	
+	public long getSmallestDate()
+	{
+		long number = Long.MAX_VALUE;
+		
+		for (Token token : tokens)
+		{
+			if (token.getTimeStamp() < number)
+			{
+				number = token.getTimeStamp();
+			}
+		}
+		return number;
+	}
 
+	public long getLargestDate()
+	{
+		long number = Long.MIN_VALUE;
+		
+		for (Token token : tokens)
+		{
+			if (token.getTimeStamp() > number)
+			{
+				number = token.getTimeStamp();
+			}
+		}
+		return number;
+	}
 }

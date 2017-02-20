@@ -1,21 +1,23 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleUI 
 {
-	ArrayList<State> states;
 	ArrayList<Person> users;
 	Person currentUser;
 	Scanner scan;
 	FileHandler fh;
+	ChartMaker ch;
+	int CHARTINTERVAL = 5;
 	
 	public ConsoleUI() 
 	{
 		users = new ArrayList<Person>();
 		currentUser = null;
 		scan = new Scanner(System.in);
-		states = new ArrayList<State>();
 		fh = new FileHandler();
+		ch = new ChartMaker(CHARTINTERVAL);
 	}
 	
 	public void run()
@@ -50,7 +52,7 @@ public class ConsoleUI
 					System.out.println("(e) Add Token		(f) Edit Token		(g) Remove Token		(h) Edit Periodic Tokens");
 					System.out.println("(i) Add Reward		(j) Edit Reward		(k) Remove Reward		(l) Children Status");
 					System.out.println("(m) Redeem Reward	(n) Change User		(o) Revert to old save		(p) Print User List");
-					System.out.println("(q) Save");
+					System.out.println("(q) Save		(r) Print History");
 					
 					String command = scan.nextLine();
 					
@@ -161,12 +163,11 @@ public class ConsoleUI
 							break;
 						}
 						System.out.println(child.getName() + " is currently in " + child.getCurrentMode().getName() + " mode.");
-						System.out.println("Please enter a reward name to redeem:");
 						for(Reward reward : child.getCurrentMode().getRewards())
 						{
 							System.out.println("Costs: " + reward.getCost() + " -- Name: " + reward.getName());
 						}
-						String rewardName = scan.nextLine();
+						String 	rewardName 	= promptForInput("Please enter a reward name to redeem:");
 						int cost = child.getCurrentMode().redeemReward(rewardName, child.getCurrentMode().getTokens().size());
 						
 						for (int i = 0; i < cost; i++)
@@ -184,16 +185,6 @@ public class ConsoleUI
 					}
 					else if (command.equals("o"))
 					{
-//						int counter = 0;
-//						for (State state : states)
-//						{
-//							System.out.println(counter + ". " + state.getTimeStamp());
-//							counter++;
-//						}
-//						String choice = promptForInput("Which save would you like to backup too?");
-//						currentUser = null;
-//						users = states.get(Integer.parseInt(choice)).getSavedState();
-//						break;
 						users.clear();
 						String 	fileName	= promptForInput("Please enter a file name to read from:");
 						users = fh.readFromFile(fileName);
@@ -209,11 +200,24 @@ public class ConsoleUI
 					}
 					else if (command.equals("q"))
 					{
-						//states.add(new State(users));
 						String 	fileName	= promptForInput("Please enter a file name to save to:");
 						fh.saveToFile(fileName, users);
 					}
-					
+					else if (command.equals("r"))
+					{
+						String 	childName	= promptForInput("Please enter a child name to generate history graphs for:");
+						int 	interval	= promptForInputInt("Please enter the amount of intervals the graphs should have:");
+						Child 	child 		= ((Parent) currentUser).getChild(childName);
+						ch.setInterval(interval);
+						try 
+						{
+							ch.makeChart(child);
+						} 
+						catch (IOException e) 
+						{
+							e.printStackTrace();
+						}
+					}
 					else
 					{
 						System.out.println("Incorrect Entry");
